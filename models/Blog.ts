@@ -8,4 +8,4 @@ const blogSchema = new Schema<IBlog>({
   _user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-mongoose.model<IBlog>("Blog", blogSchema);
+export default mongoose.model<IBlog>("Blog", blogSchema);

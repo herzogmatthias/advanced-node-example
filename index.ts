@@ -8,6 +8,8 @@ import { getKeys } from "./config/keys";
 import "./models/User";
 import "./models/Blog";
 import "./services/passport";
+import { blogRoutes } from "./routes/blogRoutes";
+import { authRoutes } from "./routes/authRoutes";
 
 const keys = getKeys()!;
 
@@ -26,8 +28,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./routes/authRoutes")(app);
-require("./routes/blogRoutes")(app);
+authRoutes(app);
+blogRoutes(app);
 
 if (["production"].includes(process.env.NODE_ENV!)) {
   app.use(express.static("client/build"));
