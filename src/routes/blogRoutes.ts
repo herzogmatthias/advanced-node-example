@@ -20,6 +20,7 @@ export const blogRoutes = (app: e.Express) => {
     "/api/blogs",
     requireLogin,
     async (req: e.Request, res: e.Response) => {
+      console.log(req.user);
       const blogs = await Blog.find({ _user: req.user!.id });
 
       res.send(blogs);

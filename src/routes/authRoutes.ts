@@ -13,6 +13,7 @@ export const authRoutes = (app: e.Express) => {
     "/auth/google/callback",
     passport.authenticate("google"),
     (req: e.Request, res: e.Response) => {
+      console.log(req.user);
       res.redirect("/blogs");
     }
   );
