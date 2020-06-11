@@ -2,31 +2,30 @@ import * as React from "react";
 import { RootState } from "../../redux/root-reducer";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { IUser } from "../../interfaces/IUser";
 
 export interface IHeaderProps {
-  user: any;
+  user: IUser | undefined;
 }
 
 function Header({ user }: IHeaderProps) {
   const renderContent = () => {
-    switch (user) {
-      case null:
-        return;
-      case false:
-        return (
-          <li>
-            <a href={"/auth/google"}>Login With Google</a>
-          </li>
-        );
-      default:
-        return [
-          <li key="3" style={{ margin: "0 10px" }}>
-            <Link to="/blogs">My Blogs</Link>
-          </li>,
-          <li key="2">
-            <a href={"/auth/logout"}>Logout</a>
-          </li>,
-        ];
+    console.log(user);
+    if (user) {
+      return [
+        <li key="3" style={{ margin: "0 10px" }}>
+          <Link to="/blogs">My Blogs</Link>
+        </li>,
+        <li key="2">
+          <a href={"http://localhost:5000/auth/logout"}>Logout</a>
+        </li>,
+      ];
+    } else {
+      return (
+        <li>
+          <a href={"http://localhost:5000/auth/google"}>Login With Google</a>
+        </li>
+      );
     }
   };
   return (
@@ -46,7 +45,7 @@ function Header({ user }: IHeaderProps) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  user: state.user,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, {})(Header);

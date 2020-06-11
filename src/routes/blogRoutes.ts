@@ -8,7 +8,7 @@ export const blogRoutes = (app: e.Express) => {
     requireLogin,
     async (req: e.Request, res: e.Response) => {
       const blog = await Blog.findOne({
-        _user: req.user!.id,
+        _user: req.user!._id,
         _id: req.params.id,
       });
 
@@ -21,7 +21,7 @@ export const blogRoutes = (app: e.Express) => {
     requireLogin,
     async (req: e.Request, res: e.Response) => {
       console.log(req.user);
-      const blogs = await Blog.find({ _user: req.user!.id });
+      const blogs = await Blog.find({ _user: req.user!._id });
 
       res.send(blogs);
     }
@@ -32,11 +32,10 @@ export const blogRoutes = (app: e.Express) => {
     requireLogin,
     async (req: e.Request, res: e.Response) => {
       const { title, content } = req.body;
-
       const blog = new Blog({
         title,
         content,
-        _user: req.user!.id,
+        _user: req.user!._id,
       });
 
       try {

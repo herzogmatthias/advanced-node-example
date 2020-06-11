@@ -1,5 +1,5 @@
+import { IBlogMap } from "../../interfaces/IBlogMap";
+
 export interface IBlogState {
-  blogs: {
-    [key: string]: any;
-  };
+  blogs: IBlogMap;
 }

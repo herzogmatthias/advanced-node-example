@@ -4,14 +4,19 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../redux/root-reducer";
 import { fetchBlogsAsync } from "../../redux/blog/blog.actions";
 import { connect } from "react-redux";
+import { IBlogMap } from "../../interfaces/IBlogMap";
 
 export interface IBlogListProps {
-  blogs: any;
+  blogs: IBlogMap;
   fetchBlogs(): void;
 }
 
 function BlogList({ blogs, fetchBlogs }: IBlogListProps) {
+  React.useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
   const renderBlogs = () => {
+    console.log(blogs);
     return map(blogs, (blog) => {
       return (
         <div className="card darken-1 horizontal" key={blog._id}>

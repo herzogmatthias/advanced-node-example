@@ -13,14 +13,13 @@ export const authRoutes = (app: e.Express) => {
     "/auth/google/callback",
     passport.authenticate("google"),
     (req: e.Request, res: e.Response) => {
-      console.log(req.user);
-      res.redirect("/blogs");
+      res.redirect("http://localhost:3000/blogs/");
     }
   );
 
   app.get("/auth/logout", (req: e.Request, res: e.Response) => {
     req.logout();
-    res.redirect("/");
+    res.redirect("http://localhost:3000/");
   });
 
   app.get("/api/current_user", (req: e.Request, res: e.Response) => {

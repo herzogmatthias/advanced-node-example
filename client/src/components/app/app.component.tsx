@@ -12,7 +12,7 @@ export type IAppProps = ConnectedProps<typeof connector>;
 function App({ fetchUsers }: IAppProps) {
   React.useEffect(() => {
     fetchUsers();
-  });
+  }, [fetchUsers]);
 
   return (
     <div>

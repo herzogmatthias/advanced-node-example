@@ -2,9 +2,11 @@ import { Dispatch } from "redux";
 import { createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { FETCH_BLOG, FETCH_BLOGS } from "./blog.types";
+import { IBlogMap } from "../../interfaces/IBlogMap";
+import { IBlog } from "../../interfaces/IBlog";
 
-export const fetchBlog = createAction<any>(FETCH_BLOG);
-export const fetchBlogs = createAction<any>(FETCH_BLOGS);
+export const fetchBlog = createAction<IBlog>(FETCH_BLOG);
+export const fetchBlogs = createAction<IBlogMap>(FETCH_BLOGS);
 
 export const submitBlogAsync = (values: any, history: any) => async (
   dispatch: Dispatch
