@@ -6,6 +6,7 @@ import Header from "../header/header.component";
 import Dashboard from "../dashboard/dashboard.component";
 import Landing from "../landing/landing.component";
 import BlogNew from "../blog-new/blog-new.component";
+import BlogShow from "../blog-show/blog-show.component";
 
 export type IAppProps = ConnectedProps<typeof connector>;
 
@@ -22,6 +23,7 @@ function App({ fetchUsers }: IAppProps) {
             <Header />
             <Switch>
               <Route path="/blogs/new" component={BlogNew} />
+              <Route exact path="/blogs/:_id" component={BlogShow} />
               <Route path="/blogs" component={Dashboard} />
               <Route path="/" component={Landing} />
             </Switch>

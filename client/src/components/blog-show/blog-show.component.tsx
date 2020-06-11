@@ -1,0 +1,40 @@
+import * as React from "react";
+import { RootState } from "../../redux/root-reducer";
+import { RouteComponentProps } from "react-router";
+import { fetchBlogAsync } from "../../redux/blog/blog.actions";
+import { connect, ConnectedProps } from "react-redux";
+
+export type IBlogShowProps = ConnectedProps<typeof connector> &
+  RouteComponentProps<{ _id: string }>;
+
+function BlogShow({ blog, fetchBlog, match }: IBlogShowProps) {
+  React.useEffect(() => {
+    fetchBlog(match.params._id);
+  }, [fetchBlog]);
+  if (!blog) {
+    return <div></div>;
+  }
+
+  const { title, content } = blog;
+
+  return (
+    <div>
+      <h3>{title}</h3>
+      <p>{content}</p>
+    </div>
+  );
+}
+
+const mapStateToProps = (
+  state: RootState,
+  ownProps: RouteComponentProps<{ _id: string }>
+) => ({
+  blog: state.blog.blogs[ownProps.match.params._id],
+});
+
+const mapDispatchToProps = {
+  fetchBlog: fetchBlogAsync,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps)(BlogShow);
