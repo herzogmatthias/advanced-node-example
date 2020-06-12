@@ -8,6 +8,7 @@ import { getKeys } from "./config/keys";
 import "./models/User";
 import "./models/Blog";
 import "./services/passport";
+import "./services/cache";
 import { blogRoutes } from "./routes/blogRoutes";
 import { authRoutes } from "./routes/authRoutes";
 
