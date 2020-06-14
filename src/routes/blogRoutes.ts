@@ -1,6 +1,7 @@
 import e from "express";
 import { requireLogin } from "../middlewares/requireLogin";
 import Blog from "../models/Blog";
+import { cleanCache } from "../middlewares/cleanCache";
 
 export const blogRoutes = (app: e.Express) => {
   app.get(
@@ -20,9 +21,9 @@ export const blogRoutes = (app: e.Express) => {
     "/api/blogs",
     requireLogin,
     async (req: e.Request, res: e.Response) => {
-      console.log(req.user);
-      const blogs = await Blog.find({ _user: req.user!._id });
-
+      const blogs = await Blog.find({ _user: req.user!._id }).cache({
+        key: req.user?._id,
+      });
       res.send(blogs);
     }
   );
@@ -30,6 +31,7 @@ export const blogRoutes = (app: e.Express) => {
   app.post(
     "/api/blogs",
     requireLogin,
+    cleanCache,
     async (req: e.Request, res: e.Response) => {
       const { title, content } = req.body;
       const blog = new Blog({
