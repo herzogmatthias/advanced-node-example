@@ -11,6 +11,7 @@ import "./services/passport";
 import "./services/cache";
 import { blogRoutes } from "./routes/blogRoutes";
 import { authRoutes } from "./routes/authRoutes";
+import Keygrip from "keygrip";
 
 const keys = getKeys()!;
 
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey],
+    keys: new Keygrip([keys.cookieKey]),
   })
 );
 app.use(passport.initialize());
