@@ -1,17 +1,14 @@
-import puppeteer, { Browser, Page } from "puppeteer";
+import { Browser, Page, SetCookie } from "puppeteer";
 import { createSession } from "./factories/session.factory";
 import { createUser } from "./factories/user.factory";
+import { CustomPage } from "./helpers/page.helper";
 
-let browser: Browser;
-let page: Page;
-
+let page: CustomPage & Browser & Page;
 beforeEach(async () => {
-  browser = await puppeteer.launch({ headless: true });
-  page = await browser.newPage();
-  await page.goto("http://localhost:3000");
+  page = await CustomPage.build();
 });
 afterEach(async () => {
-  await browser.close();
+  await page.close();
 });
 
 test("the header has the correct text", async () => {
@@ -30,7 +27,7 @@ test("When signed in, shows logout button", async () => {
   const user = await createUser();
   const { sig, session } = createSession(user);
 
-  const cookies: puppeteer.SetCookie[] = [
+  const cookies: SetCookie[] = [
     {
       name: "express:sess.sig",
       value: sig,
