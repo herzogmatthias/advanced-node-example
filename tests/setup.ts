@@ -1,3 +1,5 @@
+jest.setTimeout(30000);
+
 import { getKeys } from "../src/config/keys";
 import { connect } from "mongoose";
 import "../src/models/User";
