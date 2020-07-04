@@ -1,6 +1,7 @@
 import puppeteer, { Browser, Page, SetCookie } from "puppeteer";
 import { createUser } from "../factories/user.factory";
 import { createSession } from "../factories/session.factory";
+import { IAction } from "../../src/interfaces/IAction";
 
 export class CustomPage {
   page: Page;
@@ -57,5 +58,45 @@ export class CustomPage {
 
   getContentsOf(selector: string) {
     return this.page.$eval(selector, (el) => el.innerHTML);
+  }
+
+  get(path: string) {
+    return this.page.evaluate((_path: string) => {
+      return fetch(_path, {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        return res.json();
+      });
+    }, path);
+  }
+  post(path: string, body: any) {
+    return this.page.evaluate(
+      (_path: string, _body: any) => {
+        return fetch(_path, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(_body),
+        }).then((res) => {
+          return res.json();
+        });
+      },
+      path,
+      body
+    );
+  }
+
+  async execRequests(actions: IAction[]) {
+    return Promise.all(
+      actions.map(({ method, path, body }, index) => {
+        return this[method](path, body);
+      })
+    );
   }
 }

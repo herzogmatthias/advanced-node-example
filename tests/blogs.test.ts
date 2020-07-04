@@ -1,5 +1,6 @@
 import { CustomPage } from "./helpers/page.helper";
 import { Browser, Page } from "puppeteer";
+import { IAction } from "../src/interfaces/IAction";
 
 let page: CustomPage & Browser & Page;
 beforeEach(async () => {
@@ -57,29 +58,22 @@ describe("When logged in", () => {
 });
 
 describe("User is not logged in", () => {
-  test("User cannot create blog posts", async () => {
-    const result = await page.evaluate(() => {
-      return fetch("api/blogs", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: "My Title", content: "My Content" }),
-      }).then((response) => response.json());
-    });
-    expect(result).toEqual({ error: "You must log in!" });
-  });
-  test("User cannot get a list of blogs", async () => {
-    const result = await page.evaluate(() => {
-      return fetch("api/blogs", {
-        method: "GET",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json());
-    });
-    expect(result).toEqual({ error: "You must log in!" });
+  const actions: IAction[] = [
+    { method: "get", path: "/api/blogs" },
+    {
+      method: "post",
+      path: "/api/blogs",
+      body: {
+        title: "My Title",
+        content: "My Content",
+      },
+    },
+  ];
+  test("Blog related actions are prohibited", async () => {
+    const results = await page.execRequests(actions);
+
+    for (const result of results) {
+      expect(result).toEqual({ error: "You must log in!" });
+    }
   });
 });
