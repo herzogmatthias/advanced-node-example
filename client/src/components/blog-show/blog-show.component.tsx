@@ -10,7 +10,7 @@ export type IBlogShowProps = ConnectedProps<typeof connector> &
 function BlogShow({ blog, fetchBlog, match }: IBlogShowProps) {
   React.useEffect(() => {
     fetchBlog(match.params._id);
-  }, [fetchBlog]);
+  }, [fetchBlog, match.params._id]);
   if (!blog) {
     return <div></div>;
   }
