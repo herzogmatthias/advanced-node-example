@@ -3,7 +3,9 @@ import redis from "redis";
 
 import { promisify } from "util";
 import ICacheOptions from "../interfaces/ICacheOptions";
-const client = redis.createClient();
+import { getKeys } from "../config/keys";
+const keys = getKeys();
+const client = redis.createClient(keys!.redisUrl);
 const hget = promisify(client.hget).bind(client);
 
 Query.prototype.cache = function (options: ICacheOptions = {}) {

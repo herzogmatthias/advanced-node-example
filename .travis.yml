@@ -9,4 +9,19 @@ services:
   - redis
 
 env:
-  - NODE_ENV=ci
+  - NODE_ENV=ci PORT=3000
+
+cache:
+  directories:
+    - node_modules
+    - client/node_modules
+
+install:
+  - npm install
+  - npm run build:client
+  - npm run build:server
+
+script:
+  - nohup npm run start:prod &
+  - sleep 3
+  - npm run test

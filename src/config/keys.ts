@@ -1,4 +1,5 @@
 import * as devKeys from "./dev";
+import * as ciKeys from "./ci";
 
 export const getKeys = () => {
   if (process.env.NODE_ENV === "production") {
@@ -6,6 +7,6 @@ export const getKeys = () => {
   } else if (process.env.NODE_ENV === "development") {
     return devKeys.default;
   } else {
-    return devKeys.default;
+    return ciKeys.default;
   }
 };
