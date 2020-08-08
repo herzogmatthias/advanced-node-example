@@ -9,7 +9,10 @@ export class CustomPage {
     this.page = page;
   }
   static async build() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox"],
+    });
     const page = await browser.newPage();
 
     const customPage = new CustomPage(page);
