@@ -53,7 +53,8 @@ function BlogFormReview({
       <form onSubmit={onSubmit}>
         <h5>Please confirm your entries</h5>
         {renderFields()}
-
+        <h5>Add An Image</h5>
+        <input type="file" accept="image/*"></input>
         {renderButtons()}
       </form>
     </div>
