@@ -8,9 +8,11 @@ import { IBlog } from "../../interfaces/IBlog";
 export const fetchBlog = createAction<IBlog>(FETCH_BLOG);
 export const fetchBlogs = createAction<IBlogMap>(FETCH_BLOGS);
 
-export const submitBlogAsync = (values: any, history: any) => async (
-  dispatch: Dispatch
-) => {
+export const submitBlogAsync = (
+  values: any,
+  file: File | null,
+  history: any
+) => async (dispatch: Dispatch) => {
   const res = await axios.post("/api/blogs", values);
   history.push("/blogs");
   dispatch({ type: FETCH_BLOG, payload: res.data });

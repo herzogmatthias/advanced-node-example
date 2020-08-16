@@ -12,6 +12,7 @@ import "./services/cache";
 import { blogRoutes } from "./routes/blogRoutes";
 import { authRoutes } from "./routes/authRoutes";
 import Keygrip from "keygrip";
+import { uploadRoutes } from "./routes/uploadFiles";
 
 const keys = getKeys()!;
 
@@ -35,6 +36,7 @@ app.use(passport.session());
 
 authRoutes(app);
 blogRoutes(app);
+uploadRoutes(app);
 
 if (["production", "ci"].includes(process.env.NODE_ENV!)) {
   app.use(express.static("client/build"));

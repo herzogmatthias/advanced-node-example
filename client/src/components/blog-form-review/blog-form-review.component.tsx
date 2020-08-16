@@ -17,6 +17,7 @@ function BlogFormReview({
   history,
   submitBlog,
 }: IBlogFormReviewProps) {
+  const [file, changeFile] = React.useState<File | null>(null);
   const renderButtons = () => {
     return (
       <div>
@@ -46,15 +47,20 @@ function BlogFormReview({
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    submitBlog(formValues, history);
+    submitBlog(formValues, file, history);
   };
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    changeFile(event.target.files![0]);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
         <h5>Please confirm your entries</h5>
         {renderFields()}
         <h5>Add An Image</h5>
-        <input type="file" accept="image/*"></input>
+        <input onChange={onFileChange} type="file" accept="image/*"></input>
         {renderButtons()}
       </form>
     </div>
