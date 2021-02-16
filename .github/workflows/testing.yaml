@@ -26,7 +26,6 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        redis-version: [5]
 
     steps:
       - uses: actions/checkout@v2
@@ -35,10 +34,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Start Redis v${{ matrix.redis-version }}
-        uses: superchargejs/redis-github-action@1.1.0
-        with:
-          redis-version: ${{ matrix.redis-version }}
       - run: npm install
       - run: npm run build:client
       - run: npm run build:server
