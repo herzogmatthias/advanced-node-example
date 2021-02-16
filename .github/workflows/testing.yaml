@@ -5,9 +5,6 @@ on:
     branches:
       - "**"
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
   services:
     redis:
       image: redis
@@ -18,23 +15,23 @@ jobs:
       image: mongo:3.4.23
       ports:
         - 27017:27017
-  env:
-    NODE_ENV: ci
-    PORT: 3000
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: ci
+      PORT: 3000
+      strategy:
+        matrix:
+          node-version: [12.x]
+      steps:
+        - uses: actions/checkout@v2
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run build:client
-      - run: npm run build:server
-      - run: npm run start:prod &
-      - run: npm run test
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - run: npm install
+        - run: npm run build:client
+        - run: npm run build:server
+        - run: npm run start:prod &
+        - run: npm run test
