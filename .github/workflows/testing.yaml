@@ -1,0 +1,46 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - "**"
+
+services:
+  redis:
+    image: redis
+    # Map TCP port 6379 on Docker host to a random free port on the Redis container
+    ports:
+      - 6379/6379
+  mongodb:
+    image: mongo:3.4.23
+    ports:
+      - 27017:27017
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  env:
+    NODE_ENV: ci
+    PORT: 3000
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        redis-version: [5]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Start Redis v${{ matrix.redis-version }}
+        uses: superchargejs/redis-github-action@1.1.0
+        with:
+          redis-version: ${{ matrix.redis-version }}
+      - run: npm install
+      - run: npm run build:client
+      - run: npm run build:server
+      - run: npm run start:prod &
+      - run: npm run test

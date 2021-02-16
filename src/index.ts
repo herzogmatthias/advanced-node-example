@@ -12,7 +12,7 @@ import "./services/cache";
 import { blogRoutes } from "./routes/blogRoutes";
 import { authRoutes } from "./routes/authRoutes";
 import Keygrip from "keygrip";
-import { uploadRoutes } from "./routes/uploadFiles";
+import { uploadRoutes } from "./routes/uploadRoutes";
 
 const keys = getKeys()!;
 
