@@ -18,7 +18,7 @@ function BlogShow({ blog, fetchBlog, match }: IBlogShowProps) {
     if (blog.imageUrl) {
       return (
         <img
-          alt="Blog Image"
+          alt="Blog"
           src={
             "https://nodejs-advanced-example-bucket.s3.eu-central-1.amazonaws.com/" +
             blog.imageUrl
