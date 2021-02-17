@@ -25,6 +25,7 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/puppeteer": "^3.0.0",
     "@types/redis": "^2.8.22",
+    "@types/uuid": "^8.3.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "ts-jest": "^26.1.0",

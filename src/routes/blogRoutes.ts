@@ -33,10 +33,11 @@ export const blogRoutes = (app: e.Express) => {
     requireLogin,
     cleanCache,
     async (req: e.Request, res: e.Response) => {
-      const { title, content } = req.body;
+      const { title, content, imageUrl } = req.body;
       const blog = new Blog({
         title,
         content,
+        imageUrl,
         _user: req.user!._id,
       });
 

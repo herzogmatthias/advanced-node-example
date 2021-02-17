@@ -14,6 +14,19 @@ function BlogShow({ blog, fetchBlog, match }: IBlogShowProps) {
   if (!blog) {
     return <div></div>;
   }
+  const renderImage = () => {
+    if (blog.imageUrl) {
+      return (
+        <img
+          src={
+            "https://nodejs-advanced-example-bucket.s3.eu-central-1.amazonaws.com/" +
+            blog.imageUrl
+          }
+        ></img>
+      );
+    }
+    return <div></div>;
+  };
 
   const { title, content } = blog;
 
@@ -21,6 +34,7 @@ function BlogShow({ blog, fetchBlog, match }: IBlogShowProps) {
     <div>
       <h3>{title}</h3>
       <p>{content}</p>
+      {renderImage()}
     </div>
   );
 }
