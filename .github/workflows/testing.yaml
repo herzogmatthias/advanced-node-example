@@ -33,5 +33,5 @@ jobs:
       - run: npm install
       - run: npm run build:client
       - run: npm run build:server
-      - run: npm run start:prod &
+      - run: npm run start:prod
       - run: npm run test
